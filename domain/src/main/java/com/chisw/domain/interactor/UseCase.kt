@@ -2,6 +2,7 @@ package com.chisw.domain.interactor
 
 import io.reactivex.Flowable
 import io.reactivex.Scheduler
+import io.reactivex.Single
 import io.reactivex.disposables.Disposables
 import io.reactivex.functions.Consumer
 
@@ -11,7 +12,7 @@ abstract class UseCase<P : UseCase.UseCaseParameter, R : UseCase.UseCaseResult>
 
     private var disposable = Disposables.empty()
 
-    protected abstract fun createObservable(params: P): Flowable<R>?
+    protected abstract fun createObservable(params: P): Single<R>?
 
     override fun execute(params: P, d: Consumer<R>) {
         disposable = createObservable(params)!!
@@ -21,7 +22,7 @@ abstract class UseCase<P : UseCase.UseCaseParameter, R : UseCase.UseCaseResult>
     }
 
 
-    override fun execute(params: P): Flowable<R>? {
+    override fun execute(params: P): Single<R>? {
         return createObservable(params)!!
                 .subscribeOn(threadExecutor.invoke())
                 .observeOn(postExecutionThread.invoke())
