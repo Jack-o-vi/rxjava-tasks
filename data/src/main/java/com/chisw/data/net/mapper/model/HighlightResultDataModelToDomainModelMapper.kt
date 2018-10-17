@@ -1,17 +1,23 @@
 package com.chisw.data.net.mapper.model
 
+import android.util.Log
 import com.chisw.data.net.mapper.Mapper
-import com.chisw.domain.model.story.Author
-import com.chisw.domain.model.story.HighlightResult
-import com.chisw.domain.model.story.Title
-import com.chisw.domain.model.story.Url
+import com.chisw.data.net.model.story.Author
+import com.chisw.data.net.model.story.HighlightResult
+import com.chisw.data.net.model.story.Title
+import com.chisw.data.net.model.story.Url
+import com.chisw.domain.model.story.Author as DomainAuthor
+import com.chisw.domain.model.story.HighlightResult as DomainHighlightResult
+import com.chisw.domain.model.story.Title as DomainTitle
+import com.chisw.domain.model.story.Url as DomainUrl
 
-class HighlightResultDataModelToDomainModelMapper(private val authorMapper: Mapper<com.chisw.data.net.model.story.Author, Author>,
-                                                  private val urlMapper: Mapper<com.chisw.data.net.model.story.Url, Url>,
-                                                  private val titleMapper: Mapper<com.chisw.data.net.model.story.Title, Title>) : Mapper<com.chisw.data.net.model.story.HighlightResult, HighlightResult> {
-    override fun map(from: com.chisw.data.net.model.story.HighlightResult): HighlightResult {
-        val highlightResult = HighlightResult()
-        with(from) {
+class HighlightResultDataModelToDomainModelMapper(private val authorMapper: Mapper<Author, DomainAuthor>,
+                                                  private val urlMapper: Mapper<Url, DomainUrl>,
+                                                  private val titleMapper: Mapper<Title, DomainTitle>) : Mapper<HighlightResult, DomainHighlightResult> {
+    override fun map(from: com.chisw.data.net.model.story.HighlightResult): DomainHighlightResult {
+        Log.d("duck", "Mapper highlight $from")
+        val highlightResult = DomainHighlightResult()
+        from.apply {
             author?.let { author ->
                 highlightResult.author = authorMapper.map(author)
             }
@@ -22,9 +28,6 @@ class HighlightResultDataModelToDomainModelMapper(private val authorMapper: Mapp
                 highlightResult.url = urlMapper.map(url)
             }
         }
-//        highlightResult.author = authorMapper.map(from.author!!)
-//        highlightResult.title = titleMapper.map(from.title!!)
-//        highlightResult.url = urlMapper.map(from.url!!)
         return highlightResult
     }
 }

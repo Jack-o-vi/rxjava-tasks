@@ -14,11 +14,14 @@ object NetworkManager {
 
     private var algoliaApi: AlgoliaApi? = null
 
+    init {
+        val okHttpClient: OkHttpClient = initClient()
+        algoliaApi = getApi(okHttpClient, AlgoliaApi::class.java)
+    }
+
     private fun initClient(): OkHttpClient {
         val interceptor = HttpLoggingInterceptor()
         interceptor.level = HttpLoggingInterceptor.Level.BODY
-
-
         return OkHttpClient.Builder()
                 .addInterceptor(interceptor)
                 .addNetworkInterceptor { chain ->
@@ -34,15 +37,9 @@ object NetworkManager {
                 .build()
     }
 
-    init {
-        val okHttpClient: OkHttpClient = initClient()
-        algoliaApi = getApi(okHttpClient, AlgoliaApi::class.java)
-    }
-
     private fun <T> getApi(okHttpClient: OkHttpClient, tClass: Class<T>): T {
         val gson = GsonBuilder()
                 .create()
-
         return Retrofit.Builder()
                 .baseUrl(BuildConfig.BASE_URL)
                 .client(okHttpClient)

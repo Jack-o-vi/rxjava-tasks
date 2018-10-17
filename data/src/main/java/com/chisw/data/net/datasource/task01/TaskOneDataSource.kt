@@ -1,23 +1,36 @@
 package com.chisw.data.net.datasource.task01
 
+import android.util.Log
 import com.chisw.data.net.datasource.DataSource
 import com.chisw.data.net.manager.NetworkManager
 import com.chisw.data.net.model.story.Data
-import com.chisw.data.net.model.user.User
+import com.chisw.data.net.specification.RemoteSpecification
+import com.chisw.domain.abstraction.specification.Specification
 import io.reactivex.Single
 import okhttp3.ResponseBody
 
-class TaskOneDataSource : DataSource {
+class TaskOneDataSource : DataSource<Data?> {
 
-    override fun getUser(username:String?): Single<User>? {
-        return NetworkManager.getAlgoliaApi()?.getUsers(username)
+    companion object {
+        val TAG = TaskOneDataSource::class.java.simpleName
     }
 
-    override fun getStoriesByPage(page:Int?): Single<Data>? {
-        return NetworkManager.getAlgoliaApi()?.getStories(page)
+    override fun getResponseBody(specification: Specification?): Single<ResponseBody?>? {
+        if (specification is RemoteSpecification) {
+            specification.getParameters()?.get(0)?.apply {
+                return NetworkManager.getAlgoliaApi()?.getStoriesInString(toInt())
+            }
+        }
+        return null
     }
 
-    override fun getStoriesByPageString(page:Int?): Single<ResponseBody>? {
-        return NetworkManager.getAlgoliaApi()?.getStoriesInString(page)
+    override fun getItem(specification: Specification?): Single<Data?>? {
+        if (specification is RemoteSpecification) {
+            specification.getParameters()?.get(0)?.apply {
+                Log.d(TAG, "getItem() getStories request page ${this}")
+                return NetworkManager.getAlgoliaApi()?.getStories(toInt())
+            }
+        }
+        return null
     }
 }

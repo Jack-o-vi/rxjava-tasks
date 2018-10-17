@@ -1,14 +1,10 @@
 package com.chisw.data.net.datasource
 
-import com.chisw.data.net.model.story.Data
-import com.chisw.data.net.model.user.User
+import com.chisw.domain.abstraction.specification.Specification
 import io.reactivex.Single
 import okhttp3.ResponseBody
 
-interface DataSource {
-    fun getUser(username: String?): Single<User>?
-
-    fun getStoriesByPage(page: Int?): Single<Data>?
-
-    fun getStoriesByPageString(page: Int?): Single<ResponseBody>?
+interface DataSource<T> {
+    fun getResponseBody(specification: Specification?): Single<ResponseBody?>?
+    fun getItem(specification: Specification?): Single<T?>?
 }

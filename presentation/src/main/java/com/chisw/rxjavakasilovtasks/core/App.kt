@@ -8,6 +8,7 @@ import com.chisw.data.net.mapper.model.*
 import com.chisw.data.net.repository.RepositoryImpl
 import com.chisw.domain.abstraction.repository.Repository
 import com.chisw.domain.model.story.*
+import com.chisw.data.net.model.story.Data as DataModelData
 
 class App : Application() {
 
@@ -15,16 +16,16 @@ class App : Application() {
         var repository: Repository? = null
     }
 
-    private fun getRepositoryImp(dataSource: DataSource?,
-                                 mapper: Mapper<com.chisw.data.net.model.story.Data, Data>): Repository? {
+    private fun getRepositoryImp(dataSource: DataSource<DataModelData?>?,
+                                 mapper: Mapper<DataModelData, Data>): Repository? {
         return RepositoryImpl(dataSource, mapper)
     }
 
-    private fun getDataSource(): DataSource? {
+    private fun getDataSource(): DataSource<DataModelData?>? {
         return TaskOneDataSource()
     }
 
-    private fun getStoryDataModelToDomainModel(hitMapper: Mapper<com.chisw.data.net.model.story.Hit, Hit>): Mapper<com.chisw.data.net.model.story.Data, Data> {
+    private fun getStoryDataModelToDomainModel(hitMapper: Mapper<com.chisw.data.net.model.story.Hit, Hit>): Mapper<DataModelData, Data> {
         return StoryDataModelToDomainModelMapper(hitMapper)
     }
 
