@@ -7,10 +7,7 @@ data class Hit constructor(
         var points: Int? = null,
         var storyText: Any? = null,
         var commentText: Any? = null,
-        var tags: List<String>? = null,
+        var tags: MutableList<String>? = null,
         var numComments: Int? = null,
         var objectID: String? = null,
-        var highlightResult: HighlightResult? = null) {
-
-
-}
+        var highlightResult: HighlightResult? = null)

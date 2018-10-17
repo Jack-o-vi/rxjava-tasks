@@ -12,12 +12,9 @@ data class Hit constructor(
         @SerializedName("comment_text")
         val commentText: Any? = null,
         @SerializedName("_tags")
-        val tags: List<String>? = null,
+        val tags: MutableList<String>? = null,
         @SerializedName("num_comments")
         val numComments: Int? = null,
         val objectID: String? = null,
         @SerializedName("_highlightResult")
-        val highlightResult: HighlightResult? = null) {
-
-
-}
+        val highlightResult: HighlightResult? = null)
