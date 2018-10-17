@@ -1,43 +1,37 @@
-package com.chisw.rxjavakasilovtasks.ui.presenter.task01
+package com.chisw.rxjavakasilovtasks.ui.presenter.task02
 
 import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import com.chisw.data.net.specification.task01.TaskOneSpecification
 import com.chisw.domain.interactor.UseCase
-import com.chisw.domain.interactor.tasks.TaskOneUseCase
-import com.chisw.rxjavakasilovtasks.ui.contract.task01.TaskOneContract
+import com.chisw.domain.interactor.tasks.TaskTwoUseCase
+import com.chisw.rxjavakasilovtasks.ui.contract.task02.TaskTwoContract
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
-class TaskOnePresenter(private var useCase: UseCase<TaskOneUseCase.TaskOneParameter, TaskOneUseCase.TaskOneResult>)
-    : TaskOneContract.TaskOnePresenter {
-
-    private var view: TaskOneContract.TaskOneView? = null
+class TaskTwoPresenter(private var useCase: UseCase<TaskTwoUseCase.TaskTwoParameter, TaskTwoUseCase.TaskTwoResult>)
+    : TaskTwoContract.TaskTwoPresenter {
+    private var view: TaskTwoContract.TaskTwoView? = null
 
     companion object {
-        val TAG = TaskOnePresenter::class.java.simpleName
+        val TAG = TaskTwoPresenter::class.java.simpleName
     }
 
     @SuppressLint("CheckResult")
-    override fun bind(view: TaskOneContract.TaskOneView) {
+    override fun bind(view: TaskTwoContract.TaskTwoView) {
         this.view = view
         Log.d(TAG, "Bind $view")
         val stringBuilder = StringBuilder()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            useCase.execute(TaskOneUseCase.TaskOneParameter(TaskOneSpecification()))
-                    ?.subscribe(object : Observer<TaskOneUseCase.TaskOneResult> {
+            useCase.execute(TaskTwoUseCase.TaskTwoParameter(TaskOneSpecification()))
+                    ?.subscribe(object : Observer<TaskTwoUseCase.TaskTwoResult> {
 
-                        override fun onComplete() {
-                        }
+                        override fun onComplete() {}
 
-                        override fun onNext(result: TaskOneUseCase.TaskOneResult) {
+                        override fun onNext(result: TaskTwoUseCase.TaskTwoResult) {
                             Log.d(TAG, "onSuccess ${result.story} ")
-                            result.story?.forEach { title ->
-                                stringBuilder.append(title)
-                                stringBuilder.append(System.lineSeparator())
-                            }
                             view.setText(stringBuilder.toString())
                         }
 
