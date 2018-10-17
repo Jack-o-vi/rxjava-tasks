@@ -15,38 +15,18 @@ class TaskOneUseCase(private var repository: Repository,
     override fun createObservable(params: TaskOneParameter): Single<TaskOneResult>? {
         return repository.taskOne(params.specification)
                 ?.zipWith(repository.taskOne(params.specification), BiFunction { data1, data2 ->
-                    val listRes = ArrayList<String?>()
-                    data1.hits?.map { hit -> hit.title }?.let { titles ->
-                        listRes.addAll(titles)
-                    }
-                    data2.hits?.map { hit -> hit.title }?.let { titles ->
-                        listRes.addAll(titles)
+                    val listRes: MutableList<String?>? = null
+                    data1.hits?.map { hit -> hit.title }?.let { titles1 ->
+                        data2.hits?.map { hit -> hit.title }?.let { titles2 ->
+                            if (titles1 is MutableList && titles2 is MutableList) {
+                                titles1.addAll(titles2)
+                                return@BiFunction TaskOneResult(titles1)
+                            }
+                        }
                     }
                     return@BiFunction TaskOneResult(listRes)
                 })
     }
-
-    /*
-ver 0.1
-repository.taskOne(params.arrayInt[0])
-                ?.mergeWith(repository.taskOne(params.arrayInt[1]))
-                ?.map { data ->
-                    data.hits?.map { hit -> hit.title }?.let { titles ->
-                        TaskOneResult(titles)
-                    }
-                }
-                ?.single(TaskOneResult())
-
-
-    return repository.taskOne(params.arrayInt[0])
-                ?.mergeWith(repository.taskOne(params.arrayInt[1]))
-                ?.map { data ->
-                    data.hits?.map { hit -> hit.title }?.let { titles ->
-                        TaskOneResult(titles)
-                    }
-                }
-
-     */
 
     class TaskOneParameter(var specification: Specification) : UseCase.UseCaseParameter
 
