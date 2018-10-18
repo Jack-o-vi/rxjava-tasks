@@ -29,7 +29,9 @@ class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         setProceedClickListener()
         spTasks?.let {
             it.onItemSelectedListener = this
-            val dataAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, TaskActivity.activitiesList)
+            val dataAdapter = ArrayAdapter<String>(this,
+                    android.R.layout.simple_spinner_item,
+                    TaskActivity.activitiesList)
             // Drop down layout style - list view with radio button
             dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 

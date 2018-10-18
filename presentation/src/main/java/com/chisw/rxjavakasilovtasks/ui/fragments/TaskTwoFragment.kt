@@ -30,7 +30,7 @@ class TaskTwoFragment : AbstractTaskFragment(), TaskTwoContract.TaskTwoView {
         val view = inflateView(R.layout.task1_fragment, inflater, container)
 
         Log.d(TAG, "onCreateView")
-
+        tvInformation?.text = TAG
         App.repository?.let {
             presenter = TaskTwoPresenter(TaskTwoUseCase(it, { Schedulers.io() }, { AndroidSchedulers.mainThread() }))
         }
@@ -52,6 +52,6 @@ class TaskTwoFragment : AbstractTaskFragment(), TaskTwoContract.TaskTwoView {
     }
 
     override fun setText(string: String?) {
-        tvInformation.text = string
+        tvInformation?.text = string
     }
 }

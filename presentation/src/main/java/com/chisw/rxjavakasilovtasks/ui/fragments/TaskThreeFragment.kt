@@ -6,36 +6,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.chisw.domain.interactor.tasks.TaskOneUseCase
 import com.chisw.rxjavakasilovtasks.R
-import com.chisw.rxjavakasilovtasks.core.App
-import com.chisw.rxjavakasilovtasks.ui.contract.task01.TaskOneContract
-import com.chisw.rxjavakasilovtasks.ui.presenter.task01.TaskOnePresenter
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.chisw.rxjavakasilovtasks.ui.contract.task03.TaskThreeContract
+import com.chisw.rxjavakasilovtasks.ui.presenter.task03.TaskThreePresenter
 import kotlinx.android.synthetic.main.task1_fragment.*
 
-class TaskOneFragment : AbstractTaskFragment(), TaskOneContract.TaskOneView {
-
-    private var presenter: TaskOneContract.TaskOnePresenter? = null
-
+class TaskThreeFragment : AbstractTaskFragment(), TaskThreeContract.TaskThreeView {
+    private var presenter: TaskThreeContract.TaskThreePresenter? = null
 
     companion object {
-        val TAG = TaskOneFragment::class.java.simpleName
+        val TAG = TaskThreeFragment::class.java.simpleName
 
-        fun newInstance(): TaskOneFragment {
-            return TaskOneFragment()
+        fun newInstance(): TaskThreeFragment {
+            return TaskThreeFragment()
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflateView(R.layout.task1_fragment, inflater, container)
-
         Log.d(TAG, "onCreateView")
-
-        App.repository?.let {
-            presenter = TaskOnePresenter(TaskOneUseCase(it, { Schedulers.io() }, { AndroidSchedulers.mainThread() }))
-        }
+        setText(TAG)
+        presenter = TaskThreePresenter()
         return view
     }
 
