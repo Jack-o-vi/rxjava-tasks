@@ -7,6 +7,7 @@ import com.chisw.data.net.specification.task01.TaskOneSpecification
 import com.chisw.domain.interactor.UseCase
 import com.chisw.domain.interactor.tasks.TaskOneUseCase
 import com.chisw.rxjavakasilovtasks.ui.contract.task01.TaskOneContract
+import com.chisw.rxjavakasilovtasks.ui.presenter.task02.TaskTwoPresenter
 import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
@@ -30,6 +31,7 @@ class TaskOnePresenter(private var useCase: UseCase<TaskOneUseCase.TaskOneParame
                     ?.subscribe(object : Observer<TaskOneUseCase.TaskOneResult> {
 
                         override fun onComplete() {
+                            Log.d(TaskTwoPresenter.TAG, "onComplete")
                         }
 
                         override fun onNext(result: TaskOneUseCase.TaskOneResult) {
@@ -42,7 +44,7 @@ class TaskOnePresenter(private var useCase: UseCase<TaskOneUseCase.TaskOneParame
                         }
 
                         override fun onSubscribe(d: Disposable) {
-                            Log.e(TAG, "onError Exception $d")
+                            Log.d(TaskTwoPresenter.TAG, "onSubscribe Disposable $d")
                         }
 
                         override fun onError(e: Throwable) {

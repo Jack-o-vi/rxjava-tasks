@@ -1,3 +1,5 @@
 package com.chisw.domain.abstraction.specification
 
-interface Specification
+interface Specification {
+    val args: Array<String?>?
+}

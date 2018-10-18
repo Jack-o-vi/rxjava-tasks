@@ -4,15 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.support.v4.app.Fragment
 import com.chisw.rxjavakasilovtasks.ui.fragments.TaskOneFragment
+import com.chisw.rxjavakasilovtasks.ui.fragments.TaskTwoFragment
 
 class TaskActivity : AbstractTasksActivity() {
 
     override fun createFragment(): Fragment? {
-        val intent = Intent()
         val fragmentTask = intent.getStringExtra(TASK_FRAGMENT_KEY)
         return when (fragmentTask) {
             activitiesList[0] -> TaskOneFragment.newInstance()
-            activitiesList[1] -> TaskOneFragment.newInstance()
+            activitiesList[1] -> TaskTwoFragment.newInstance()
             else -> TaskOneFragment.newInstance()
         }
     }

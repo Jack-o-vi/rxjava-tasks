@@ -10,14 +10,14 @@ import com.chisw.domain.abstraction.specification.Specification
 import io.reactivex.Single
 import okhttp3.ResponseBody
 
-class TaskTowDataSource : DataSource<User?> {
+class TaskTwoDataSource : DataSource<User?> {
     override fun getResponseBody(specification: Specification?): Single<ResponseBody?>? {
         return null
     }
 
     override fun getItem(specification: Specification?): Single<User?>? {
         if (specification is RemoteSpecification) {
-            specification.getParameters()?.get(0)?.let {
+            specification.args?.get(1)?.let {
                 Log.d(TaskOneDataSource.TAG, "getItem() getStories request page ${this}")
                 return NetworkManager.getAlgoliaApi()?.getUsers(it)
             }

@@ -26,7 +26,7 @@ class TaskOneDataSource : DataSource<Data?> {
 
     override fun getItem(specification: Specification?): Single<Data?>? {
         if (specification is RemoteSpecification) {
-            specification.getParameters()?.get(0)?.apply {
+            specification.args?.get(0)?.apply {
                 Log.d(TAG, "getItem() getStories request page ${this}")
                 return NetworkManager.getAlgoliaApi()?.getStories(toInt())
             }

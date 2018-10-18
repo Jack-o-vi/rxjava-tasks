@@ -1,4 +1,4 @@
-package com.chisw.data.net.mapper.model
+package com.chisw.data.net.mapper.model.story
 
 import android.util.Log
 import com.chisw.data.net.mapper.Mapper
