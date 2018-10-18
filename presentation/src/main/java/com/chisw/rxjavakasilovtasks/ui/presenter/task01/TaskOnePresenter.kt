@@ -7,7 +7,8 @@ import com.chisw.data.net.specification.task01.TaskOneSpecification
 import com.chisw.domain.interactor.UseCase
 import com.chisw.domain.interactor.tasks.TaskOneUseCase
 import com.chisw.rxjavakasilovtasks.ui.contract.task01.TaskOneContract
-import io.reactivex.SingleObserver
+import com.chisw.rxjavakasilovtasks.ui.presenter.task02.TaskTwoPresenter
+import io.reactivex.Observer
 import io.reactivex.disposables.Disposable
 
 class TaskOnePresenter(private var useCase: UseCase<TaskOneUseCase.TaskOneParameter, TaskOneUseCase.TaskOneResult>)
@@ -26,94 +27,34 @@ class TaskOnePresenter(private var useCase: UseCase<TaskOneUseCase.TaskOneParame
         val stringBuilder = StringBuilder()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            useCase.execute(TaskOneUseCase.TaskOneParameter(TaskOneSpecification()))?.subscribe(object : SingleObserver<TaskOneUseCase.TaskOneResult> {
-                override fun onSuccess(result: TaskOneUseCase.TaskOneResult) {
-                    Log.d(TAG, "onSuccess ${result.story} ")
-                    result.story?.forEach { title ->
-                        stringBuilder.append(title)
-                        stringBuilder.append(System.lineSeparator())
-                    }
-                    view.setText(stringBuilder.toString())
-                }
+            useCase.execute(TaskOneUseCase.TaskOneParameter(TaskOneSpecification()))
+                    ?.subscribe(object : Observer<TaskOneUseCase.TaskOneResult> {
 
-                override fun onSubscribe(d: Disposable) {
-                    Log.e(TAG, "onError Exception $d")
-                }
+                        override fun onComplete() {
+                            Log.d(TaskTwoPresenter.TAG, "onComplete")
+                        }
 
-                override fun onError(e: Throwable) {
-                    Log.e(TAG, "onError Exception")
-                    e.printStackTrace()
-                    view.showToast(e.toString())
-                }
-            })
+                        override fun onNext(result: TaskOneUseCase.TaskOneResult) {
+                            Log.d(TAG, "onSuccess ${result.story} ")
+                            result.story?.forEach { title ->
+                                stringBuilder.append(title)
+                                stringBuilder.append(System.lineSeparator())
+                            }
+                            view.setText(stringBuilder.toString())
+                        }
 
-//                    ?.doOnSubscribe { d ->
-//                        Log.d(TAG, "Subscribe disposable $d and isDisposed = ${d.isDisposed}")
-//                    }
-//                    ?.doOnSuccess { result ->
-//                        Log.d(TAG, "onSuccess ${result?.story} ")
-//                        result?.story?.forEach { title ->
-//                            stringBuilder.append(title)
-//                            stringBuilder.append(System.lineSeparator())
-//                        }
-//                        view.setText(stringBuilder.toString())
-//                    }
-//                    ?.doOnError { ex ->
-//                        Log.d(TAG, "Error: $ex")
-//                    }
+                        override fun onSubscribe(d: Disposable) {
+                            Log.d(TaskTwoPresenter.TAG, "onSubscribe Disposable $d")
+                        }
 
-//            useCase.execute(TaskOneUseCase.TaskOneParameter(listOf(0, 1)))
-//                    ?.subscribe(object : Subscriber<TaskOneUseCase.TaskOneResult> {
-//                        override fun onComplete() {
-//                            Log.e(TAG, "onComplete:")
-//                        }
-//
-//                        override fun onSubscribe(s: Subscription?) {
-//                            Log.e(TAG, "onSubscribe subscription: $s")
-//                        }
-//
-//                        override fun onNext(result: TaskOneUseCase.TaskOneResult?) {
-//                            Log.e(TAG, "onSuccess ${result?.story} ")
-//                            result?.story?.forEach { title ->
-//                                stringBuilder.append(title)
-//                                stringBuilder.append(System.lineSeparator())
-//                            }
-//                            view.setText(stringBuilder.toString())
-//                        }
-//
-//                        override fun onError(e: Throwable?) {
-//                            Log.e(TAG, "onError Exception")
-//                            e?.printStackTrace()
-//                            view.showToast(e.toString())
-//                        }
-//                    })
+                        override fun onError(e: Throwable) {
+                            Log.e(TAG, "onError Exception")
+                            e.printStackTrace()
+                            view.showToast(e.toString())
+                        }
+                    })
         }
     }
-
-    /*
-                ?.subscribe(object : Consumer<TaskOneUseCase.TaskOneResult> {
-                    override fun onSuccess(result: TaskOneUseCase.TaskOneResult) {
-                        Log.d(TAG, "onSuccess ${result.story} ")
-                        val stringBuilder = StringBuilder()
-                        result.story?.forEach { title ->
-                            stringBuilder.append(title)
-                            stringBuilder.append(System.lineSeparator())
-                        }
-                        view.setText(stringBuilder.toString())
-                    }
-
-                    override fun onSubscribe(d: Disposable) {
-                        Log.e(TAG, "onError Exception $d")
-                    }
-
-                    override fun onError(e: Throwable) {
-                        Log.e(TAG, "onError Exception")
-                        e.printStackTrace()
-                        view.showToast(e.toString())
-                    }
-                })
-
-     */
 
     override fun unbind() {
         Log.d(TAG, "Unbind $view")

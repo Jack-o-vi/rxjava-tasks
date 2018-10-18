@@ -8,15 +8,38 @@ import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.ViewAnimationUtils
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import com.chisw.rxjavakasilovtasks.R
 import kotlinx.android.synthetic.main.activity_main.*
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
+
+    private var index: Int = 0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        button.setOnClickListener {
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        setProceedClickListener()
+        spTasks?.let {
+            it.onItemSelectedListener = this
+            val dataAdapter = ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, TaskActivity.activitiesList)
+            // Drop down layout style - list view with radio button
+            dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+
+            // attaching data adapter to spinner
+            it.adapter = dataAdapter
+        }
+    }
+
+    private fun setProceedClickListener() {
+        btnProceed.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                 val cx = it.width / 2
                 val cy = it.height / 2
@@ -27,21 +50,28 @@ class MainActivity : AppCompatActivity() {
                     override fun onAnimationEnd(animation: Animator) {
                         super.onAnimationEnd(animation)
                         it.visibility = View.INVISIBLE
-                        startTaskOneActivity()
+                        startTaskOneActivity(index)
                         Handler().postDelayed({
-                            button.visibility = View.VISIBLE
+                            btnProceed.visibility = View.VISIBLE
                         }, 2_000)
                     }
                 })
                 anim.start()
             }
-
         }
+    }
+
+
+    override fun onNothingSelected(parent: AdapterView<*>?) {
 
     }
 
-    private fun startTaskOneActivity() {
-        startActivity(TaskActivity.newInstance(this))
+    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+        index = position
+    }
+
+    private fun startTaskOneActivity(index: Int) {
+        startActivity(TaskActivity.newInstance(this, TaskActivity.activitiesList[index]))
     }
 
 }

@@ -52,5 +52,4 @@ object NetworkManager {
     fun getAlgoliaApi(): AlgoliaApi? {
         return algoliaApi
     }
-
 }
