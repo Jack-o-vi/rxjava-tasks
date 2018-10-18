@@ -15,7 +15,7 @@ class TaskOneUseCase(private var repository: Repository,
 
     override fun createObservable(params: TaskOneParameter): Observable<TaskOneResult>? {
         return repository.taskOne(params.specification)
-                ?.zipWith(repository.taskOne(params.specification), BiFunction<Data?, Data?, TaskOneResult> { data1, data2 ->
+                ?.zipWith(repository.taskOne(params.specification2), BiFunction<Data?, Data?, TaskOneResult> { data1, data2 ->
                     val listRes: MutableList<String?>? = null
                     data1.hits?.map { hit -> hit.title }?.let { titles1 ->
                         data2.hits?.map { hit -> hit.title }?.let { titles2 ->
@@ -29,7 +29,8 @@ class TaskOneUseCase(private var repository: Repository,
                 })?.toObservable()
     }
 
-    class TaskOneParameter(var specification: Specification) : UseCase.UseCaseParameter
+    class TaskOneParameter(var specification: Specification,
+                           var specification2: Specification) : UseCase.UseCaseParameter
 
     class TaskOneResult(val story: List<String?>? = null) : UseCase.UseCaseResult
 }

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Build
 import android.util.Log
 import com.chisw.data.net.specification.task01.TaskOneSpecification
+import com.chisw.data.net.specification.task01.TaskOneSpecification2
 import com.chisw.domain.interactor.UseCase
 import com.chisw.domain.interactor.tasks.TaskOneUseCase
 import com.chisw.rxjavakasilovtasks.ui.contract.task01.TaskOneContract
@@ -27,7 +28,7 @@ class TaskOnePresenter(private var useCase: UseCase<TaskOneUseCase.TaskOneParame
         val stringBuilder = StringBuilder()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            useCase.execute(TaskOneUseCase.TaskOneParameter(TaskOneSpecification()))
+            useCase.execute(TaskOneUseCase.TaskOneParameter(TaskOneSpecification(), TaskOneSpecification2()))
                     ?.subscribe(object : Observer<TaskOneUseCase.TaskOneResult> {
 
                         override fun onComplete() {
