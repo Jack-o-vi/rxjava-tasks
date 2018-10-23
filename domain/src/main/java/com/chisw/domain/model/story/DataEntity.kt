@@ -1,7 +1,7 @@
 package com.chisw.domain.model.story
 
-data class Data(
-        var hits: MutableList<Hit>? = null,
+data class DataEntity(
+        var hits: MutableList<HitEntity>? = null,
         var page: Int? = null,
         var nbHits: Int? = null,
         var nbPages: Int? = null,

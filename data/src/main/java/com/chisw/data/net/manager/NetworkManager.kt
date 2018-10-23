@@ -12,10 +12,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object NetworkManager {
 
-    private var algoliaApi: AlgoliaApi? = null
+    private var algoliaApi: AlgoliaApi
 
     init {
-        val okHttpClient: OkHttpClient = initClient()
+        val okHttpClient = initClient()
         algoliaApi = getApi(okHttpClient, AlgoliaApi::class.java)
     }
 
@@ -49,7 +49,7 @@ object NetworkManager {
                 .create(tClass)
     }
 
-    fun getAlgoliaApi(): AlgoliaApi? {
+    fun getAlgoliaApi(): AlgoliaApi {
         return algoliaApi
     }
 }

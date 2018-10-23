@@ -11,6 +11,6 @@ import okhttp3.ResponseBody
  * @version 0.0.1
  */
 interface DataSource<T> {
-    fun getResponseBody(specification: Specification?): Single<ResponseBody?>?
-    fun getItem(specification: Specification?): Single<T?>?
+    fun getResponseBody(specification: Specification): Single<ResponseBody>
+    fun getItem(specification: Specification): Single<T>
 }

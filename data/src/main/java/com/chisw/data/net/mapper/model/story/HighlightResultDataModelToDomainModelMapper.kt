@@ -2,21 +2,21 @@ package com.chisw.data.net.mapper.model.story
 
 import android.util.Log
 import com.chisw.data.net.mapper.Mapper
-import com.chisw.data.net.model.story.Author
-import com.chisw.data.net.model.story.HighlightResult
-import com.chisw.data.net.model.story.Title
-import com.chisw.data.net.model.story.Url
-import com.chisw.domain.model.story.Author as DomainAuthor
-import com.chisw.domain.model.story.HighlightResult as DomainHighlightResult
-import com.chisw.domain.model.story.Title as DomainTitle
-import com.chisw.domain.model.story.Url as DomainUrl
+import com.chisw.data.net.model.story.AuthorBean
+import com.chisw.data.net.model.story.HighlightResultBean
+import com.chisw.data.net.model.story.TitleBean
+import com.chisw.data.net.model.story.UrlBean
+import com.chisw.domain.model.story.AuthorEntity
+import com.chisw.domain.model.story.HighlightResultEntity
+import com.chisw.domain.model.story.TitleEntity
+import com.chisw.domain.model.story.UrlEntity
 
-class HighlightResultDataModelToDomainModelMapper(private val authorMapper: Mapper<Author, DomainAuthor>,
-                                                  private val urlMapper: Mapper<Url, DomainUrl>,
-                                                  private val titleMapper: Mapper<Title, DomainTitle>) : Mapper<HighlightResult, DomainHighlightResult> {
-    override fun map(from: com.chisw.data.net.model.story.HighlightResult): DomainHighlightResult {
+class HighlightResultDataModelToDomainModelMapper(private val authorMapper: Mapper<AuthorBean, AuthorEntity>,
+                                                  private val urlMapper: Mapper<UrlBean, UrlEntity>,
+                                                  private val titleMapper: Mapper<TitleBean, TitleEntity>) : Mapper<HighlightResultBean, HighlightResultEntity> {
+    override fun map(from: com.chisw.data.net.model.story.HighlightResultBean): HighlightResultEntity {
         Log.d("duck", "Mapper highlight $from")
-        val highlightResult = DomainHighlightResult()
+        val highlightResult = HighlightResultEntity()
         from.apply {
             author?.let { author ->
                 highlightResult.author = authorMapper.map(author)

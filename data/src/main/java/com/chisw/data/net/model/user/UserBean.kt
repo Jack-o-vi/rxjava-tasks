@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName
 "objectID": "crunchiebones"}
  */
 
-data class User constructor(
+data class UserBean constructor(
         var id: Int? = null,
         var username: String? = null,
         var about: String? = null,

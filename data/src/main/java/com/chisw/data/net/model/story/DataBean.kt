@@ -1,7 +1,7 @@
 package com.chisw.data.net.model.story
 
-data class Data(
-        val hits: MutableList<Hit>? = null,
+data class DataBean(
+        val hits: MutableList<HitBean>? = null,
         val page: Int? = null,
         val nbHits: Int? = null,
         val nbPages: Int? = null,

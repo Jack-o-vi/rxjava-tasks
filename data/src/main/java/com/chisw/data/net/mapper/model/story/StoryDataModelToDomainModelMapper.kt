@@ -2,18 +2,18 @@ package com.chisw.data.net.mapper.model.story
 
 import android.util.Log
 import com.chisw.data.net.mapper.Mapper
-import com.chisw.data.net.model.story.Data
-import com.chisw.data.net.model.story.Hit
+import com.chisw.data.net.model.story.DataBean
+import com.chisw.data.net.model.story.HitBean
+import com.chisw.domain.model.story.DataEntity
+import com.chisw.domain.model.story.HitEntity
 import java.util.*
-import com.chisw.domain.model.story.Data as DomainData
-import com.chisw.domain.model.story.Hit as DomainHit
 
-class StoryDataModelToDomainModelMapper(private val hitMapper: Mapper<Hit, DomainHit>) : Mapper<Data, DomainData> {
-    override fun map(from: Data): DomainData {
+class StoryDataModelToDomainModelMapper(private val hitMapper: Mapper<HitBean, HitEntity>) : Mapper<DataBean, DataEntity> {
+    override fun map(from: DataBean): DataEntity {
         Log.d("duck", "Mapper data $from")
-        val data = DomainData()
+        val data = DataEntity()
         val listHit = from.hits
-        val listDomainHit: MutableList<com.chisw.domain.model.story.Hit> = LinkedList()
+        val listDomainHit: MutableList<com.chisw.domain.model.story.HitEntity> = LinkedList()
         listHit?.let {
             for (item in it) {
                 listDomainHit.add(hitMapper.map(item))
