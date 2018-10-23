@@ -2,15 +2,16 @@ package com.chisw.data.net.mapper.model.story
 
 import android.util.Log
 import com.chisw.data.net.mapper.Mapper
-import com.chisw.data.net.model.story.HighlightResult
-import com.chisw.data.net.model.story.Hit
-import com.chisw.domain.model.story.HighlightResult as DomainHighlightResult
-import com.chisw.domain.model.story.Hit as DomainHit
+import com.chisw.data.net.model.story.HighlightResultBean
+import com.chisw.data.net.model.story.HitBean
+import com.chisw.domain.model.story.HighlightResultEntity
+import com.chisw.domain.model.story.HitEntity
 
-class HitDataModelToDomainMapper(private val highlightResultDataModelToDomainModelMapper: Mapper<HighlightResult, DomainHighlightResult>) : Mapper<Hit, DomainHit> {
-    override fun map(from: Hit): DomainHit {
+class HitDataModelToDomainMapper(private val highlightResultDataModelToDomainModelMapper:
+                                 Mapper<HighlightResultBean, HighlightResultEntity>) : Mapper<HitBean, HitEntity> {
+    override fun map(from: HitBean): HitEntity {
         Log.d("duck", "Mapper hit $from")
-        val hit = DomainHit()
+        val hit = HitEntity()
         hit.author = from.author
         hit.commentText = from.commentText
         hit.numComments = from.numComments

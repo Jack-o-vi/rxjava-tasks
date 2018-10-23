@@ -2,7 +2,7 @@ package com.chisw.data.net.model.story
 
 import com.google.gson.annotations.SerializedName
 
-data class Hit constructor(
+data class HitBean constructor(
         val title: String? = null,
         val url: String? = null,
         val author: String? = null,
@@ -17,4 +17,4 @@ data class Hit constructor(
         val numComments: Int? = null,
         val objectID: String? = null,
         @SerializedName("_highlightResult")
-        val highlightResult: HighlightResult? = null)
+        val highlightResult: HighlightResultBean? = null)

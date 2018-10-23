@@ -1,6 +1,6 @@
 package com.chisw.domain.model.story
 
-data class Hit constructor(
+data class HitEntity constructor(
         var title: String? = null,
         var url: String? = null,
         var author: String? = null,
@@ -10,4 +10,4 @@ data class Hit constructor(
         var tags: MutableList<String>? = null,
         var numComments: Int? = null,
         var objectID: String? = null,
-        var highlightResult: HighlightResult? = null)
+        var highlightResult: HighlightResultEntity? = null)
