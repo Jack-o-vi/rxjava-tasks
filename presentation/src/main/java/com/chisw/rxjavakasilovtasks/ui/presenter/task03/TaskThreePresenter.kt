@@ -17,10 +17,10 @@ class TaskThreePresenter : TaskThreeContract.TaskThreePresenter {
 
     override fun bind(view: TaskThreeContract.TaskThreeView) {
         this.view = view
-        handleTaskThree()
+        taskThree()
     }
 
-    private fun taskThree(): Maybe<String> {
+    private fun emmitBangOrException(): Maybe<String> {
         return Maybe.create<String> { emitter ->
             if (Random().nextBoolean()) {
                 if (!emitter.isDisposed) {
@@ -34,8 +34,8 @@ class TaskThreePresenter : TaskThreeContract.TaskThreePresenter {
         }
     }
 
-    private fun handleTaskThree() {
-        taskThree().subscribe(object : MaybeObserver<String> {
+    private fun taskThree() {
+        emmitBangOrException().subscribe(object : MaybeObserver<String> {
             override fun onSuccess(t: String) {
                 Log.d(TAG, "onSuccess $t")
                 view?.showToast(t)
